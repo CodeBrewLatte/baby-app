@@ -13,6 +13,10 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  sessionId: {
+    type: Number,
+    required: true,
+  },
   entries: [],
 });
 

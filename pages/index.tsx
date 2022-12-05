@@ -1,36 +1,18 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import SignUp from '../components/signUp'
 
 export default function Home() {
+  useEffect(() => setSignUp(true),[])
 
-  
+  const [signUp,setSignUp] = useState(true)
 
-  const submitPassword = async(e: any) => {
-    e.preventDefault();
-    console.log(e.target)
-
-    const userInputValue: string = e.target.elements.user.value;
-    const passInputValue: string = e.target.elements.pass.value;
-
-    const data = {
-      username: userInputValue,
-      password: passInputValue
-    }
-
-    const response = await fetch('/api/userhandler', {
-      method: 'POST',
-      mode: 'cors', 
-      cache: 'no-cache',
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json'
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: JSON.stringify(data)
-  })
+  const toggleSignUp = () => {
+    setSignUp(current => !current)
   }
+  
   return (
     <div className={styles.container}>
       <Head>
@@ -45,15 +27,15 @@ export default function Home() {
           Baby App
         </h1>
 
-        <p className={styles.description}>
-          Sign In or Sign Up
-        </p>
+        <div className={styles.description}>
+          <button>Sign In</button>  
+          <p>or</p> 
+          <button onClick={toggleSignUp}>Sign Up</button>
+          </div>
 
-        <form onSubmit={submitPassword}>
-          <input type='text' name="user" placeholder='Username' />
-          <input type='password' name="pass" placeholder='Password'/>
-          <button type='submit'>Submit</button>
-        </form>
+        {signUp ? <h4>hi</h4> : <SignUp></SignUp>}
+
+       
 
        
       </main>
