@@ -27,13 +27,13 @@ export default function Home() {
           Baby App
         </h1>
 
-        <div className={styles.description}>
+       
+
+        {signUp ?  <div className={styles.description}>
           <button>Sign In</button>  
           <p>or</p> 
           <button onClick={toggleSignUp}>Sign Up</button>
-          </div>
-
-        {signUp ? <h4>hi</h4> : <SignUp></SignUp>}
+          </div> : <SignUp></SignUp>}
 
        
 
