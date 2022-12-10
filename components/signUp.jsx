@@ -16,11 +16,12 @@ const SignUp = () => {
   const [errorLog, setErrorLog] = useState([])
   let errorDom;
 
+  //log elements to the DOM
   if(errorLog.length > 0) {errorDom = errorLog[0].map((element,i) => <li key={i} style={{color: "red"}}>{element}</li>)}
 
 
 
-
+  //function to check common errors and return errors to screen
   const validateEntries = (email,username,password,baby) => {
     if(errorLog.length > 0) setErrorLog([])
     const errors = [];
@@ -49,13 +50,32 @@ const SignUp = () => {
   }
 
   
-  const userSignUp = (e) => {
+  const userSignUp = async (e) => {
     e.preventDefault()
+    //first we check the passed in values to confirm no errors
     const errorHolder = validateEntries(email,username,password,baby)
     if(errorLog.length > 0) return console.log('error hit ->', errorLog)
-    console.log('good to go!')
-    console.log('the error log shows', errorLog)
-    console.log(email,username,password,baby)
+    //if no errors were ok to proceed
+    const data = {email: email, username : username, password: password, baby:baby}
+    console.log('the string!!', JSON.stringify(email))
+    //make a POST request to /api/userhandler
+    const response = await fetch('/api/userhandler', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          Router.push('/');
+        } else {
+          setError(data.error);
+        }
+      });
+    //make cookies for the user to post as their sessionId
+    
   }
 
   return (

@@ -15,9 +15,9 @@ const userSchema = new mongoose.Schema({
   },
   sessionId: {
     type: Number,
-    required: true,
+    required: false,
   },
   entries: [],
 });
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.models.User || mongoose.model("User", userSchema);

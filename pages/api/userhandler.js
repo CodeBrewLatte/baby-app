@@ -1,6 +1,9 @@
 import dbConnect from "../../db/dbConnect";
 import User from "../../models/User";
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
+import cookie from "cookie";
+import jwt from "jsonwebtoken";
 
 export default async function handler(req, res) {
   console.log("we made it to the handler");
@@ -19,21 +22,49 @@ export default async function handler(req, res) {
       }
       break;
     case "POST":
+      let user;
       try {
         console.log("We hit the POST Request");
         //const user = await User.find({})
         //console.log('the user is', user)
         console.log(req.body);
         console.log(req.headers.cookies);
-        //const cookie = await cookieCreator();
-        //console.log("cookie is", cookie);
-        //const newUser = await User.create(req.body);
-        //res.status(201).json({ success: true, data: newUser });
-        res.status(201).json({ success: true });
+
+        //check if username exists already
+
+        //if it does not start creating hash
+        const salt = bcrypt.genSaltSync();
+        const { email, username, password, baby } = req.body;
+
+        user = await User.create({
+          email: email,
+          username: username,
+          password: bcrypt.hashSync(password, salt),
+          baby: baby,
+        });
+
+        //after hash make a token
+
+        //send back the token in setHeader
       } catch (error) {
         console.log(error);
         res.status(400).json({ success: false });
       }
+      user = Object.assign({}, user);
+      const token = jwt.sign(user, "secret", {
+        expiresIn: "8h",
+      });
+
+      res.setHeader(
+        "Set-Cookie",
+        cookie.serialize("BabyAuth", token, {
+          httpOnly: true,
+          maxAge: 8 * 60 * 60,
+          path: "/",
+          sameSite: "lax",
+          secure: true,
+        })
+      );
       break;
     default:
       res.status(400).json({ success: false });
