@@ -6,6 +6,7 @@ import { Container } from '@material-ui/core';
 import { Grid } from '@mui/material';
 import Button from '@mui/material/Button';
 import { useRef, useState, useEffect } from 'react';
+import { useRouter } from "next/router";
 
 const SignUp = () => {
 
@@ -14,15 +15,21 @@ const SignUp = () => {
   const [password,setPassword] = useState('')
   const [baby,setBaby] = useState('')
   const [errorLog, setErrorLog] = useState([])
+  const router = useRouter()
   let errorDom;
 
   //log elements to the DOM
-  if(errorLog.length > 0) {errorDom = errorLog[0].map((element,i) => <li key={i} style={{color: "red"}}>{element}</li>)}
+  if(errorLog.length > 0) {
+    console.log('error log is', errorLog)
+    if(typeof errorLog[0] == "string") errorDom = <li style={{color: "red"}}>{errorLog[0]}</li>
+    else errorDom = errorLog[0].map((element,i) => <li key={i} style={{color: "red"}}>{element}</li>)}
 
 
 
   //function to check common errors and return errors to screen
   const validateEntries = (email,username,password,baby) => {
+    //note this will refresh any errors going in since it needs to revisit what was updated
+    if(typeof errorLog[0] === 'string') return
     if(errorLog.length > 0) setErrorLog([])
     const errors = [];
 
@@ -69,12 +76,15 @@ const SignUp = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          Router.push('/');
+          console.log('success', data)
+          router.push('/success')
         } else {
-          console.log('error --> ', data)
+          let errors = data.error
+          console.log('error --> ', errors)
+          console.log(typeof errors)
+          setErrorLog(old => [...old, errors])
         }
       });
-    //make cookies for the user to post as their sessionId
     
   }
 

@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import cookie from "cookie";
 import jwt from "jsonwebtoken";
+import { NextResponse, NextRequest } from "next/server";
 
 export default async function handler(req, res) {
   console.log("we made it to the handler");
@@ -44,6 +45,7 @@ export default async function handler(req, res) {
             baby: baby,
           });
         } catch (e) {
+          console.log("error hit in user creation!", e);
           res
             .status(401)
             .json({ error: "User already exists, please log in!" });
@@ -56,22 +58,23 @@ export default async function handler(req, res) {
         console.log(error);
         res.status(400).json({ success: false });
       }
-      user = Object.assign({}, user);
-      const token = jwt.sign(user, "secret", {
-        expiresIn: "8h",
-      });
+      // user = Object.assign({}, user);
+      // const token = jwt.sign(user, "secret", {
+      //   expiresIn: "8h",
+      // });
 
-      res.setHeader(
-        "Set-Cookie",
-        cookie.serialize("BabyAuth", token, {
-          httpOnly: true,
-          maxAge: 8 * 60 * 60,
-          path: "/",
-          sameSite: "lax",
-          secure: true,
-        })
-      );
-      res.json(user);
+      // res.setHeader(
+      //   "Set-Cookie",
+      //   cookie.serialize("BabyAuth", token, {
+      //     httpOnly: true,
+      //     maxAge: 8 * 60 * 60,
+      //     path: "/",
+      //     sameSite: "lax",
+      //     secure: true,
+      //   })
+      // );
+      //res.json(user);
+      res.status(200).json({ success: true });
       break;
     default:
       res.status(400).json({ success: false });
