@@ -36,12 +36,18 @@ export default async function handler(req, res) {
         const salt = bcrypt.genSaltSync();
         const { email, username, password, baby } = req.body;
 
-        user = await User.create({
-          email: email,
-          username: username,
-          password: bcrypt.hashSync(password, salt),
-          baby: baby,
-        });
+        try {
+          user = await User.create({
+            email: email,
+            username: username,
+            password: bcrypt.hashSync(password, salt),
+            baby: baby,
+          });
+        } catch (e) {
+          res
+            .status(401)
+            .json({ error: "User already exists, please log in!" });
+        }
 
         //after hash make a token
 
@@ -65,6 +71,7 @@ export default async function handler(req, res) {
           secure: true,
         })
       );
+      res.json(user);
       break;
     default:
       res.status(400).json({ success: false });

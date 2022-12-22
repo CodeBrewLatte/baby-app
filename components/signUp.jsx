@@ -71,7 +71,7 @@ const SignUp = () => {
         if (data.success) {
           Router.push('/');
         } else {
-          setError(data.error);
+          console.log('error --> ', data)
         }
       });
     //make cookies for the user to post as their sessionId

@@ -15,6 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "middleware.js", "pages/_app.jsx", "pages/index.jsx", "pages/about.jsx", "pages/api/userhandler.js", "pages/api/hello.js", "components/signUp.jsx", "components/signUp.jsx"],
   "exclude": ["node_modules"]
 }
