@@ -15,11 +15,15 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  baby: {
+    type: String,
+    required: true,
+  },
   dateCreated: {
     type: Date,
     default: Date.now,
   },
-  sessionId: {
+  sesh: {
     type: Number,
     required: false,
   },

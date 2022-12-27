@@ -5,6 +5,8 @@ import bcrypt from "bcrypt";
 import cookie from "cookie";
 import jwt from "jsonwebtoken";
 import { NextResponse, NextRequest } from "next/server";
+import { setCookie } from "cookies-next";
+import Cookies from "cookies";
 
 export default async function handler(req, res) {
   console.log("we made it to the handler");
@@ -12,7 +14,7 @@ export default async function handler(req, res) {
   const { method } = req;
 
   await dbConnect();
-  console.log("db connect", dbConnect());
+
   switch (method) {
     case "GET":
       try {
@@ -31,7 +33,7 @@ export default async function handler(req, res) {
         console.log(req.body);
         console.log(req.headers.cookies);
 
-        //check if username exists already
+        //check if username exists already (need to code this!)
 
         //if it does not start creating hash
         const salt = bcrypt.genSaltSync();
@@ -43,38 +45,30 @@ export default async function handler(req, res) {
             username: username,
             password: bcrypt.hashSync(password, salt),
             baby: baby,
+            sesh: null,
           });
         } catch (e) {
           console.log("error hit in user creation!", e);
+          //need to create other types of errors!
           res
             .status(401)
             .json({ error: "User already exists, please log in!" });
         }
-
-        //after hash make a token
-
-        //send back the token in setHeader
       } catch (error) {
         console.log(error);
         res.status(400).json({ success: false });
+      } finally {
+        const cookies = new Cookies(req, res);
+        console.log("the user is", user);
+        const token = jwt.sign(user.toJSON(), process.env.SECRET, {
+          expiresIn: "1h",
+        });
+        cookies.set("token", token, {
+          httpOnly: true,
+        });
+        return res.status(200).json({ success: true });
       }
-      // user = Object.assign({}, user);
-      // const token = jwt.sign(user, "secret", {
-      //   expiresIn: "8h",
-      // });
 
-      // res.setHeader(
-      //   "Set-Cookie",
-      //   cookie.serialize("BabyAuth", token, {
-      //     httpOnly: true,
-      //     maxAge: 8 * 60 * 60,
-      //     path: "/",
-      //     sameSite: "lax",
-      //     secure: true,
-      //   })
-      // );
-      //res.json(user);
-      res.status(200).json({ success: true });
       break;
     default:
       res.status(400).json({ success: false });

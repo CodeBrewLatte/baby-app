@@ -65,7 +65,7 @@ const SignUp = () => {
     //if no errors were ok to proceed
     const data = {email: email, username : username, password: password, baby:baby}
     console.log('the string!!', JSON.stringify(email))
-    //make a POST request to /api/userhandler
+    //make a POST request to /api/userhandler, the backend will handle JWT creation
     const response = await fetch('/api/userhandler', {
       method: 'POST',
       headers: {
