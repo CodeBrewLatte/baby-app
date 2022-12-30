@@ -6,13 +6,14 @@ import { Container } from '@material-ui/core';
 import { Grid } from '@mui/material';
 import Button from '@mui/material/Button';
 import { useRef, useState, useEffect } from 'react';
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 
 const SignIn = () => {
     //declare variables
 
     const [email, setEmail] = useState('')
     const [password,setPassword] = useState('')
+    const router = useRouter()
 
     const loginAttempt = async (e) =>{
         e.preventDefault()
@@ -29,12 +30,12 @@ const SignIn = () => {
             .then((res) => res.json())
             .then((data) => {
               if (data.success) {
-                console.log('success', data)
+                console.log('success should reroute to dash', data)
+                router.push('/dashboard')
               } else {
                 let errors = data.error
                 console.log('error --> ', errors)
                 console.log(typeof errors)
-                setErrorLog(old => [...old, errors])
               }
             });
     }

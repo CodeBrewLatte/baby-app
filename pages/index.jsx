@@ -3,14 +3,20 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { useState, useEffect } from 'react'
 import SignUp from '../components/signUp'
+import SignIn from '../components/signIn'
 
 export default function Home() {
   useEffect(() => setSignUp(true),[])
 
   const [signUp,setSignUp] = useState(true)
+  const [signIn,setSignIn] = useState(true)
 
   const toggleSignUp = () => {
     setSignUp(current => !current)
+  }
+
+  const toggleSignIn = () => {
+    setSignIn(current => !current)
   }
   
   return (
@@ -27,13 +33,18 @@ export default function Home() {
           Baby App
         </h1>
 
-       
+        <div className={styles.description}>
 
-        {signUp ?  <div className={styles.description}>
-          <button>Sign In</button>  
-          <p>or</p> 
+        {signIn ? <>
+          <button onClick={toggleSignIn}>Sign In</button>  
+          </>: <SignIn></SignIn>}
+       
+       <p>or</p> 
+
+        {signUp ?  <>
           <button onClick={toggleSignUp}>Sign Up</button>
-          </div> : <SignUp></SignUp>}
+         </>: <SignUp></SignUp>}
+         </div>
 
        
 
@@ -46,7 +57,7 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-         An App by Steve & Ethan
+         An App by Steve Benner
         </a>
       </footer>
     </div>

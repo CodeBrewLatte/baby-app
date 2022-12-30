@@ -1,8 +1,21 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import { useState, useEffect } from 'react'
 
 export default function Home() {
+
+  const [user,setUser] = useState('')
+  
+  fetch('./api/userdata').then(
+    response => response.json()
+  ).then(
+    data => {
+      console.log(data.name.username)
+      setUser(data.name.username)}
+    //data => setUser(data)
+  )
+
   return (
     <div className={styles.container}>
       <Head>
@@ -14,7 +27,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          About Us
+          Hello there {user}
         </h1>
 
         <p className={styles.description}>
