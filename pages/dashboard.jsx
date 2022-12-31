@@ -149,16 +149,6 @@ fetch('/api/createlog', {
   </thead>
   <tbody>
     {/* insert here */}
-    <tr className='bg-white-50'>
-      <td>Poop</td>
-      <td>December 30th, 2022</td>
-      <td>Little bit runny</td>
-    </tr>
-    <tr className='bg-gray-50'>
-      <td>Poop</td>
-      <td>December 30th, 2022</td>
-      <td>Little bit runny</td>
-    </tr>
   </tbody>
 </table>
         </div>
