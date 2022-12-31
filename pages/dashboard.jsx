@@ -7,23 +7,105 @@ import Router, { useRouter } from "next/router";
 
 export default function Home() {
 
+  useEffect(() => {
+    const buttons = document.querySelectorAll('img');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', event => {
+        const clickedButton = event.target.id
+        const payload = {click: clickedButton}
+        console.log('button click', payload)
+
+fetch('/api/createlog', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(payload),
+})
+  .then(res => res.json())
+  .then(response => console.log(response));
+
+
+
+
+
+        console.log(`Button with ID ${clickedButton} was clicked`);
+      });
+    });
+  }, []);
+
   const [user,setUser] = useState(null)
   const [baby,setBaby] = useState(null)
+  const [added, setAdded] = useState(false)
   const router = useRouter()
   
   fetch('./api/userdata').then(
     response => response.json()
   ).then(
     data => {
-      console.log(data)
       if(data.error == "undefined") router.push("/")
       setUser(data.name.username)
       setBaby(data.name.baby)
+      return data
     }
     //data => setUser(data)
-  ).catch(
+  ).then(final => {
+    console.log('final data', final)
+    if(!added){
+    const table = document.querySelector('table');
+
+      final.name.entries.forEach(item => {
+        const row = document.createElement('tr');
+        
+        const dateString = item.date
+        const year = dateString.slice(0, 4);
+        const month = dateString.slice(5, 7);
+        const day = dateString.slice(8, 10);
+        
+        // Create a new Date object from the date string
+        const date = new Date(dateString);
+        
+        // Get the hour from the Date object
+        const hour = date.getHours();
+
+        console.log('im getting hours of', hour)
+        
+        let hour12;
+        let ampm;
+        
+        // Determine whether the time is AM or PM
+        if (hour < 12) {
+          hour12 = hour;
+          ampm = 'AM';
+        } else {
+          if(hour === 12) hour12 = hour
+          else hour12 = hour - 12;
+          ampm = 'PM';
+        }
+        
+        const minute = dateString.slice(14, 16);
+        
+        const formattedDate = `${month}/${day}/${year} ${hour12}:${minute} ${ampm}`;
+
+
+        // const hour = date.slice(11, 13);
+        // const minute = date.slice(14, 16);    
+        // const formattedDate = `${month}/${day}/${year} ${hour}:${minute}`;
+
+        row.innerHTML = `
+          <td>${item.value}</td>
+          <td>${formattedDate}</td>
+          <td></td>
+        `;
+        table.appendChild(row);
+      });
+      setAdded(true)
+    }
+  })
+  .catch(
     error => console.log(error)
   )
+  
+  
 
   return (
     <div className={styles.container}>
@@ -41,23 +123,23 @@ export default function Home() {
 
         <div className='rounded shadow-md p-2 bg-white flex flex-row'>
         <div>
-          <img className='w-20 p-2' src='/bottle.png' alt='poop'/>
+          <img id='bottle' className='w-20 p-2' src='/bottle.png' alt='bottle'/>
         </div>
         <div>
-          <img className='w-20 p-2' src='/poop.png' alt='poop'/>
+          <img id='poop' className='w-20 p-2' src='/poop.png' alt='poop'/>
         </div>
         <div>
-          <img className='w-20 p-2' src='/sleep.png' alt='poop'/>
+          <img id='sleep' className='w-20 p-2' src='/sleep.png' alt='sleep'/>
         </div>
         <div>
-          <img className='w-20 p-2' src='/change.png' alt='poop'/>
+          <img id='change'  className='w-20 p-2' src='/change.png' alt='change'/>
         </div>
         </div>
 
 
         <div className='py-5'>
           <h2 className='text-center py-5'>History for Baby {baby} </h2>
-          <table class="w-full">
+          <table className="w-full">
   <thead className='bg-gray-50 border-b-2 border-gray-200'>
     <tr>
       <th>Event</th>
@@ -66,6 +148,7 @@ export default function Home() {
     </tr>
   </thead>
   <tbody>
+    {/* insert here */}
     <tr className='bg-white-50'>
       <td>Poop</td>
       <td>December 30th, 2022</td>
