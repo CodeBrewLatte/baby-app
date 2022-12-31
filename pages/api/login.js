@@ -25,7 +25,8 @@ export default async function handler(req, res) {
         //const user = await User.find({})
         //console.log('the user is', user)
         console.log(req.body);
-        console.log(req.headers.cookies);
+        console.log(req.cookies);
+        console.log("User is", User);
 
         try {
           //first check to see if the user even exists on the database
@@ -35,6 +36,7 @@ export default async function handler(req, res) {
             let hash = userExists.password;
             //compare the password against what's being put in -- this will return truthy if passes
             const passwordCheck = await bcrypt.compare(req.body.password, hash);
+            console.log("password check -->", passwordCheck);
 
             if (passwordCheck) {
               const cookies = new Cookies(req, res);

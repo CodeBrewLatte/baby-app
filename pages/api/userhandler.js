@@ -1,5 +1,5 @@
 import dbConnect from "../../db/dbConnect";
-import User from "../../models/User";
+import { getUserModel } from "/models/User";
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import cookie from "cookie";
@@ -9,6 +9,7 @@ import { setCookie } from "cookies-next";
 import Cookies from "cookies";
 
 export default async function handler(req, res) {
+  const User = await getUserModel();
   console.log("we made it to the handler");
   //const newUser = mongoose.model("User");
   const { method } = req;

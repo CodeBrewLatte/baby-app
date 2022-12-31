@@ -4,9 +4,10 @@ import styles from '../styles/Home.module.css'
 import { useState, useEffect } from 'react'
 import Router, { useRouter } from "next/router";
 
+
 export default function Home() {
 
-  const [user,setUser] = useState('')
+  const [user,setUser] = useState(null)
   const router = useRouter()
   
   fetch('./api/userdata').then(
@@ -31,14 +32,33 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Hello there {user}
-        </h1>
+       
+          {user ? <p>Hello there {user}</p> : <p>Loading...</p>}
+      
 
-        <p className={styles.description}>
-          Sign In or Sign Up
-  
-        </p>
+        <div className='rounded shadow p-2 bg-white'>
+        Create New Baby Log
+        </div>
+
+        <h1 className="text-3xl font-bold underline">
+      Hello world!
+    </h1>
+
+        <div className='bg-red-500'>
+          test
+        </div>
+
+        <div>
+          <img className='w-96' src='/poop.png' alt='poop'/>
+        </div>
+
+
+<figure className="max-w-lg">
+  <img className="max-w-full h-auto rounded-lg" src="/poop.png" alt="image description"/>
+  <figcaption className="mt-2 text-sm text-center text-gray-500 dark:text-gray-400">Image caption</figcaption>
+</figure>
+
+
 
        
       </main>
@@ -49,7 +69,7 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-         An App by Steve & Ethan
+         An App by Steve
         </a>
       </footer>
     </div>
