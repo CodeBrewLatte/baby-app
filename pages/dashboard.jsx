@@ -8,6 +8,7 @@ import Router, { useRouter } from "next/router";
 export default function Home() {
 
   const [user,setUser] = useState(null)
+  const [baby,setBaby] = useState(null)
   const router = useRouter()
   
   fetch('./api/userdata').then(
@@ -16,7 +17,9 @@ export default function Home() {
     data => {
       console.log(data)
       if(data.error == "undefined") router.push("/")
-      setUser(data.name.username)}
+      setUser(data.name.username)
+      setBaby(data.name.baby)
+    }
     //data => setUser(data)
   ).catch(
     error => console.log(error)
@@ -36,27 +39,51 @@ export default function Home() {
           {user ? <p>Hello there {user}</p> : <p>Loading...</p>}
       
 
-        <div className='rounded shadow p-2 bg-white'>
-        Create New Baby Log
-        </div>
-
-        <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-
-        <div className='bg-red-500'>
-          test
-        </div>
-
+        <div className='rounded shadow-md p-2 bg-white flex flex-row'>
         <div>
-          <img className='w-96' src='/poop.png' alt='poop'/>
+          <img className='w-20 p-2' src='/bottle.png' alt='poop'/>
+        </div>
+        <div>
+          <img className='w-20 p-2' src='/poop.png' alt='poop'/>
+        </div>
+        <div>
+          <img className='w-20 p-2' src='/sleep.png' alt='poop'/>
+        </div>
+        <div>
+          <img className='w-20 p-2' src='/change.png' alt='poop'/>
+        </div>
         </div>
 
 
-<figure className="max-w-lg">
-  <img className="max-w-full h-auto rounded-lg" src="/poop.png" alt="image description"/>
-  <figcaption className="mt-2 text-sm text-center text-gray-500 dark:text-gray-400">Image caption</figcaption>
-</figure>
+        <div className='py-5'>
+          <h2 className='text-center py-5'>History for Baby {baby} </h2>
+          <table class="w-full">
+  <thead className='bg-gray-50 border-b-2 border-gray-200'>
+    <tr>
+      <th>Event</th>
+      <th>Last Time</th>
+      <th>Note</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr className='bg-white-50'>
+      <td>Poop</td>
+      <td>December 30th, 2022</td>
+      <td>Little bit runny</td>
+    </tr>
+    <tr className='bg-gray-50'>
+      <td>Poop</td>
+      <td>December 30th, 2022</td>
+      <td>Little bit runny</td>
+    </tr>
+  </tbody>
+</table>
+        </div>
+
+        
+
+
+      
 
 
 
