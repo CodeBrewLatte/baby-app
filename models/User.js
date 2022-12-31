@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+let User;
+
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
@@ -29,8 +31,15 @@ const userSchema = new mongoose.Schema({
   },
   entries: [],
 });
+console.log("we hit the schema for a reason you know");
 
-const User = mongoose.model("User", userSchema);
-module.exports = User;
+export const getUserModel = () => {
+  console.log("USER IS COMING IN AS", User);
+  if (!User) {
+    User = mongoose.models.User || mongoose.model("User", userSchema);
+  }
+
+  return User;
+};
 
 //module.exports = mongoose.models.User || mongoose.model("User", userSchema);

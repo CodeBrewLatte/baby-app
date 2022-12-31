@@ -7,10 +7,11 @@ import jwt from "jsonwebtoken";
 import { NextResponse, NextRequest } from "next/server";
 import { setCookie } from "cookies-next";
 import Cookies from "cookies";
+import { getUserModel } from "/models/User";
 
 export default async function handler(req, res) {
   await dbConnect();
-  const User = mongoose.models.User;
+  const User = getUserModel();
   console.log("we made it to the login handler");
   //const newUser = mongoose.model("User");
   const { method } = req;

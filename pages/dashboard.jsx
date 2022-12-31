@@ -2,18 +2,23 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { useState, useEffect } from 'react'
+import Router, { useRouter } from "next/router";
 
 export default function Home() {
 
   const [user,setUser] = useState('')
+  const router = useRouter()
   
   fetch('./api/userdata').then(
     response => response.json()
   ).then(
     data => {
-      console.log(data.name.username)
+      console.log(data)
+      if(data.error == "undefined") router.push("/")
       setUser(data.name.username)}
     //data => setUser(data)
+  ).catch(
+    error => console.log(error)
   )
 
   return (
