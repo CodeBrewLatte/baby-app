@@ -3,7 +3,7 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { useState, useEffect } from 'react'
 import SignUp from '../components/SignNew'
-import SignIn from '../components/SignIn'
+import SignIn from '../components/SignOn'
 
 export default function Home() {
   useEffect(() => setSignUp(true),[])
