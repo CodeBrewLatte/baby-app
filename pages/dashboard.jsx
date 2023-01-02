@@ -110,7 +110,7 @@ fetch('/api/createlog', {
   return (
     <div className={styles.container}>
       <Head>
-        <title>About Us</title>
+        <title>Baby-Up Dashboard</title>
        
         <meta name="description" content="Baby Living Tracking App" />
         <link rel="icon" href="/favicon.ico" />

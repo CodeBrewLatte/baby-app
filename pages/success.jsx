@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Baby-Up</title>
+        <title>Success</title>
        
         <meta name="description" content="Baby Living Tracking App" />
         <link rel="icon" href="/favicon.ico" />
