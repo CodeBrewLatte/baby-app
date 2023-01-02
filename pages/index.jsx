@@ -11,27 +11,41 @@ export default function Home() {
   const [signUp,setSignUp] = useState(true)
   const [signIn,setSignIn] = useState(true)
   const [goBack,setGoBack] = useState(true)
-  let buttonStyle
 
   const toggleSignUp = () => {
+    const signInGone = document.getElementById('signinpre')
+    signInGone.style.display = 'none'
     setSignUp(current => !current)
+    setGoBack(false)
   }
 
   const toggleSignIn = () => {
      const signUpGone = document.getElementById('signuppre')
-    buttonStyle = signUpGone.style.display
     signUpGone.style.display = 'none';
-
-
     setSignIn(current => !current)
     setGoBack(false)
   }
 
   const goBackFunc = () => {
-    //const signUpGone = document.getElementById('signuppre')
-    setGoBack(false)
-    setSignIn(false)
-    //signUpGone.style.display = buttonStyle
+    //check which button has a style of none
+    const signUpGone = document.getElementById('signuppre')
+    const signInGone = document.getElementById('signinpre')
+
+    if(signUpGone){
+      if(signUpGone.style.display === 'none'){
+        signUpGone.style.display = 'flex'
+        setGoBack(true)
+        setSignIn(true)
+      }
+    }
+    if(signInGone){
+      if(signInGone.style.display === 'none'){
+        signInGone.style.display = 'flex'
+        setGoBack(true)
+        setSignUp(true)
+      }
+    }
+
   }
   
   return (
@@ -53,19 +67,19 @@ export default function Home() {
         <div className='flex flex-col justify-center w-full text-xl text-white items-center pt-10'>
 
         {signIn ? <>
-          <button className='flex p-4 px-8 rounded-full w-48 shadow-lg bg-midnight duration-200 hover:opacity-80 text-center justify-center my-4' onClick={toggleSignIn}>Sign In</button>  
+          <button id ='signinpre' className='flex p-4 px-8 rounded-full w-48 shadow-lg bg-midnight duration-200 hover:opacity-80 text-center justify-center my-4' onClick={toggleSignIn}>Sign In</button>  
           </>: <SignIn></SignIn>}
        
-          <span></span>
-
-          {goBack ? '' : <button className='rounded-full shadow-lg p-4 px-8 bg-yellow' onClick={goBackFunc}>Go Back</button>}
-
-          <span></span>
 
         {signUp ?  <>
           <button id='signuppre' className='flex p-4 px-8 w-48 rounded-full shadow-lg bg-midnight duration-200 hover:opacity-80 justify-center' onClick={toggleSignUp}>Sign Up</button>
          </>: <SignUp></SignUp>}
          
+          <span></span>
+
+          {goBack ? '' : <button className='rounded-full shadow-lg p-4 px-8 bg-yellow' onClick={goBackFunc}>Go Back</button>}
+
+          <span></span>
          
          </div>
 
