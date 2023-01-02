@@ -19,7 +19,11 @@ module.exports = {
       bermuda: "#78dcca",
       yellow: "#fdcb6e",
     },
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'baby-bg': "url(../public/babybg.svg)",
+      },
+    },
   },
   plugins: [],
 };

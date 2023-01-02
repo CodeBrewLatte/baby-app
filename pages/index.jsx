@@ -49,7 +49,7 @@ export default function Home() {
   }
   
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>Baby-Up - Homepage</title>
        
@@ -58,11 +58,13 @@ export default function Home() {
       </Head>
 
     {/* Hero Section */}
-      <main className='max-w-6xl mx-auto text-center mb-40 px-10 pt-16'>
+      <main className=' flex justify-center max-w-8xl mx-auto text-center px-10 pt-16 bg-baby-bg'>
+        <section className='shadow-lg bg-white w-11/12 sm:w-6/12 h-150 rounded-lg py-7 mb-12'>
+          
         <h2 className='text-4xl font-sans '>
           Baby App
         </h2>
-        <p className='font-sans pt-10'> A simple way to keep track of daily baby activites </p>
+        <p className='font-sans pt-10 px-5'> A simple way to keep track of daily baby activites. </p>
 
         <div className='flex flex-col justify-center w-full text-xl text-white items-center pt-10'>
 
@@ -84,19 +86,34 @@ export default function Home() {
          </div>
 
        
+        </section>
 
        
       </main>
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+     <section className=' w-full flex h-auto sm:h-60 items-center justify-between bg-purple flex-col sm:flex-row'>
+
+      <span className='w-56 bg-white rounded-md p-2 mx-4  my-5'>
+        <h3 className=' font-bold'>Track Baby Activities</h3>
+        <p> Our application allows you to track common activites like poop, feeding and more </p>
+      </span>
+
+      <span className=' w-56 bg-white rounded-md p-2 mx-4'>
+      <h3 className=' font-bold'>Add notes to events</h3>
+      <p className=' font-light'>In addition to tracking, you can keep notes on certain activites, so if your baby had a runny poop you can document that for example</p>
+      </span>
+
+      <span className='w-56 bg-white rounded-md p-2 mx-4  my-5'>
+      <h3 className=' font-bold'>Search for activites </h3>
+      <p> In the event that you need to search for a certain event you can use a search functionality to check on certain types of events</p>
+      </span>
+
+
+     </section>
+       
          An App by Steve Benner
-        </a>
-      </footer>
+       
+     
     </div>
   )
 }
