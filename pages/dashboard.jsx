@@ -15,6 +15,10 @@ export default function Home() {
   const [popUp, setPopUp] = useState(false)
   let passedValue = useRef(null)
 
+  const dropPopup = () => {
+    setPopUp(false)
+  }
+
   useEffect(() => {
     const buttons = document.querySelectorAll('img');
 
@@ -23,16 +27,8 @@ export default function Home() {
         setPopUp(true)
         const clickedButton = event.target.id
         const payload = {click: clickedButton}
-        // passedValue.current.focus() -- need to fix
+        passedValue.current = payload
         console.log('button click', payload)
-
-fetch('/api/createlog', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(payload),
-})
-  .then(res => res.json())
-  .then(response => console.log(response));
         console.log(`Button with ID ${clickedButton} was clicked`);
       });
     });
@@ -94,9 +90,9 @@ fetch('/api/createlog', {
         // const formattedDate = `${month}/${day}/${year} ${hour}:${minute}`;
 
         row.innerHTML = `
-          <td>${item.value}</td>
-          <td>${formattedDate}</td>
-          <td></td>
+          <td class="w-32">${item.value}</td>
+          <td class="w-40">${formattedDate}</td>
+          <td class="w-32">${item.note || ""}</td>
         `;
         table.appendChild(row);
       });
@@ -110,7 +106,7 @@ fetch('/api/createlog', {
   
 
   return (
-    <div className={styles.container}>
+    <div className={popUp ?  'bg-black opacity-50': styles.container}>
       <Head>
         <title>About Us</title>
        
@@ -121,21 +117,21 @@ fetch('/api/createlog', {
       <main className={styles.main}>
        
           {user ? <p>Hello there {user}</p> : <p>Loading...</p>}
-          {popUp ? <TrackModal buttonType={passedValue}/> : <div></div> }
+          {popUp ? <TrackModal removeModal={dropPopup} buttonType={passedValue.current}/> : <div></div> }
       
 
         <div className='rounded shadow-md p-2 bg-white flex flex-row'>
         <div>
-          <img id='bottle' className='w-20 p-2' src='/bottle.png' alt='bottle'/>
+          <img id='bottle' className='w-20 p-2 cursor-pointer' src='/bottle.png' alt='bottle'/>
         </div>
         <div>
-          <img id='poop' className='w-20 p-2' src='/poop.png' alt='poop'/>
+          <img id='poop' className='w-20 p-2 cursor-pointer' src='/poop.png' alt='poop'/>
         </div>
         <div>
-          <img id='sleep' className='w-20 p-2' src='/sleep.png' alt='sleep'/>
+          <img id='sleep' className='w-20 p-2 cursor-pointer' src='/sleep.png' alt='sleep'/>
         </div>
         <div>
-          <img id='change'  className='w-20 p-2' src='/change.png' alt='change'/>
+          <img id='change'  className='w-20 p-2 cursor-pointer' src='/change.png' alt='change'/>
         </div>
         </div>
 

@@ -16,6 +16,7 @@ export default async function handler(req, res) {
   //const newUser = mongoose.model("User");
   const { method } = req;
   const payload = req.body.click;
+  const note = req.body.note;
 
   console.log("db connect", dbConnect());
   switch (method) {
@@ -36,7 +37,7 @@ export default async function handler(req, res) {
           const decoded = jwt.decode(token);
           const userId = decoded.sub;
           //update user
-          const entry = { date: new Date(), value: payload };
+          const entry = { date: new Date(), value: payload, note: note };
           await User.updateOne({ _id: userId }, { $push: { entries: entry } });
           return res.status(200).json({ success: true });
         } catch (error) {
