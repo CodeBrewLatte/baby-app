@@ -49,7 +49,7 @@ export default function Home() {
   }
   
   return (
-    <div>
+    <div className=' bg-metal'>
       <Head>
         <title>Baby-Up - Homepage</title>
        
@@ -91,19 +91,22 @@ export default function Home() {
        
       </main>
 
-     <section className=' w-full flex h-auto sm:h-60 items-center justify-between bg-purple flex-col sm:flex-row'>
+     <section className=' w-full flex h-auto sm:h-96 items-center justify-between bg-purple flex-col sm:flex-row'>
 
-      <span className='w-56 bg-white rounded-md p-2 mx-4  my-5'>
-        <h3 className=' font-bold'>Track Baby Activities</h3>
+      <span className='flex flex-col w-56 bg-white rounded-md p-2 mx-4 my-5 text-center items-center'>
+      <img id='bottle' className='w-20 p-2' src='/report.png' alt='graph'/>
+        <h3 className=' flex font-bold'>Track Baby Activities</h3>
         <p> Our application allows you to track common activites like poop, feeding and more </p>
       </span>
 
-      <span className=' w-56 bg-white rounded-md p-2 mx-4'>
+      <span className='flex flex-col w-56 bg-white rounded-md p-2 mx-4 my-5 text-center items-center'>
+      <img id='bottle' className='w-20 p-2' src='/pencil.png' alt='pencil'/>
       <h3 className=' font-bold'>Add notes to events</h3>
       <p className=' font-light'>In addition to tracking, you can keep notes on certain activites, so if your baby had a runny poop you can document that for example</p>
       </span>
 
-      <span className='w-56 bg-white rounded-md p-2 mx-4  my-5'>
+      <span className='flex flex-col w-56 bg-white rounded-md p-2 mx-4 my-5 text-center items-center'>
+      <img id='bottle' className='w-20 p-2' src='/bottle.png' alt='bottle'/>
       <h3 className=' font-bold'>Search for activites </h3>
       <p> In the event that you need to search for a certain event you can use a search functionality to check on certain types of events</p>
       </span>
@@ -111,7 +114,8 @@ export default function Home() {
 
      </section>
        
-         An App by Steve Benner
+         <h4 className='text-white text-center py-5'>An App by Steve Benner</h4>
+
        
      
     </div>

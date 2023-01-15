@@ -7,6 +7,7 @@ import { Grid } from '@mui/material';
 import Button from '@mui/material/Button';
 import { useRef, useState, useEffect } from 'react';
 import { useRouter } from "next/router";
+import { BeatLoader } from 'react-spinners';
 
 const SignUp = () => {
 
@@ -16,6 +17,7 @@ const SignUp = () => {
   const [baby,setBaby] = useState('')
   const [errorLog, setErrorLog] = useState([])
   const router = useRouter()
+  const [isSubmitting, setIsSubmitting] = useState(false)
   let errorDom;
 
   //log elements to the DOM
@@ -29,9 +31,12 @@ const SignUp = () => {
   //function to check common errors and return errors to screen
   const validateEntries = (email,username,password,baby) => {
     //note this will refresh any errors going in since it needs to revisit what was updated
-    if(typeof errorLog[0] === 'string') return
+    if(typeof errorLog[0] === 'string') {
+      setErrorLog([])}
     if(errorLog.length > 0) setErrorLog([])
     const errors = [];
+
+    console.log(email,username,password,baby)
 
   if (username.length === 0) {
     errors.push("Username can't be empty");
@@ -51,18 +56,30 @@ const SignUp = () => {
     errors.push("Password should be at least 6 characters long");
   }
 
-  if(errors.length === 0) return setErrorLog([])
-
-  return setErrorLog(old => [...old, errors])
+  if(baby.length < 1) errors.push('You forgot to put a name for your baby')
+  //if no errors return an empty array which helps pass the logic outside this function
+  if(errors.length === 0) {
+    setErrorLog([])
+    return true
+  }
+  else{
+    //if errors
+    setIsSubmitting(false)
+    setErrorLog(old => [...old, errors])
+    return false
+  }
+  //if there are errors, update the state with errors
   }
 
   
   const userSignUp = async (e) => {
     e.preventDefault()
+    //disable the signup button + enable spinner
+    setIsSubmitting(true)
     //first we check the passed in values to confirm no errors
     const errorHolder = validateEntries(email,username,password,baby)
-    if(errorLog.length > 0) return console.log('error hit ->', errorLog)
-    //if no errors were ok to proceed
+    if(errorHolder){
+       //if no errors were ok to proceed
     const data = {email: email, username : username, password: password, baby:baby}
     console.log('the string!!', JSON.stringify(email))
     //make a POST request to /api/userhandler, the backend will handle JWT creation
@@ -79,12 +96,19 @@ const SignUp = () => {
           console.log('success', data)
           router.push('/success')
         } else {
+          console.log('hit errors on data POST')
+          setIsSubmitting(false)
           let errors = data.error
           console.log('error --> ', errors)
           console.log(typeof errors)
           setErrorLog(old => [...old, errors])
         }
       });
+    }
+     if(errorLog.length > 0){ 
+      setIsSubmitting(false)
+      return console.log('error hit ->', errorLog)}
+   
     
   }
 
@@ -113,7 +137,7 @@ const SignUp = () => {
     <TextField sx={{input: {color: 'black'}}} onChange={e => setBaby(e.target.value)} id="standard-basic" label="baby" variant="standard" />
     </Grid>
     <Grid item xs = {12}>
-    <Button type ='submit' variant="contained">Sign Up</Button>
+    {isSubmitting ? <div className='spinner'><BeatLoader animation="border" variant="primary/"/></div> :<Button type ='submit' variant="contained">Sign Up</Button>}
     </Grid>
     </Grid>
       </Box>
