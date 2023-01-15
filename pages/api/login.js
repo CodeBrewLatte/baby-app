@@ -55,15 +55,16 @@ export default async function handler(req, res) {
             } else return res.status(400).json({ success: false });
 
             console.log(passwordCheck);
-          } else return res.status(400).json({ success: false });
-          console.log(userExists);
+          } else {
+            console.log("user exists?", userExists);
+            return res.status(400).json({ success: false });
+          }
         } catch (error) {
           console.log(error);
         }
-
-        break;
       } catch (e) {
         console.log(e);
       }
+      break;
   }
 }
