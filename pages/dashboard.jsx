@@ -1,19 +1,29 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Router, { useRouter } from "next/router";
+import TrackModal from '../components/TrackModal';
 
 
 export default function Home() {
+
+  const [user,setUser] = useState(null)
+  const [baby,setBaby] = useState(null)
+  const [added, setAdded] = useState(false)
+  const router = useRouter()
+  const [popUp, setPopUp] = useState(false)
+  let passedValue = useRef(null)
 
   useEffect(() => {
     const buttons = document.querySelectorAll('img');
 
     buttons.forEach(button => {
       button.addEventListener('click', event => {
+        setPopUp(true)
         const clickedButton = event.target.id
         const payload = {click: clickedButton}
+        // passedValue.current.focus() -- need to fix
         console.log('button click', payload)
 
 fetch('/api/createlog', {
@@ -23,20 +33,12 @@ fetch('/api/createlog', {
 })
   .then(res => res.json())
   .then(response => console.log(response));
-
-
-
-
-
         console.log(`Button with ID ${clickedButton} was clicked`);
       });
     });
   }, []);
 
-  const [user,setUser] = useState(null)
-  const [baby,setBaby] = useState(null)
-  const [added, setAdded] = useState(false)
-  const router = useRouter()
+ 
   
   fetch('./api/userdata').then(
     response => response.json()
@@ -110,7 +112,7 @@ fetch('/api/createlog', {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Baby-Up Dashboard</title>
+        <title>About Us</title>
        
         <meta name="description" content="Baby Living Tracking App" />
         <link rel="icon" href="/favicon.ico" />
@@ -119,6 +121,7 @@ fetch('/api/createlog', {
       <main className={styles.main}>
        
           {user ? <p>Hello there {user}</p> : <p>Loading...</p>}
+          {popUp ? <TrackModal buttonType={passedValue}/> : <div></div> }
       
 
         <div className='rounded shadow-md p-2 bg-white flex flex-row'>
