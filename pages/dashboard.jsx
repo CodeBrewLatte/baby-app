@@ -13,14 +13,17 @@ export default function Home() {
   const [added, setAdded] = useState(false)
   const router = useRouter()
   const [popUp, setPopUp] = useState(false)
+  const [identifier,setIdentifier] = useState([])
+  let trashCans = useRef(null)
   let passedValue = useRef(null)
+  let count = 0
 
   const dropPopup = () => {
     setPopUp(false)
   }
 
   useEffect(() => {
-    const buttons = document.querySelectorAll('img');
+    const buttons = document.querySelectorAll('img.mainimg');
 
     buttons.forEach(button => {
       button.addEventListener('click', event => {
@@ -32,81 +35,114 @@ export default function Home() {
         console.log(`Button with ID ${clickedButton} was clicked`);
       });
     });
-  }, []);
 
- 
+    fetch('./api/userdata').then(
+      response => response.json()
+    ).then(
+      data => {
+        if(data.error == "undefined") router.push("/")
+        setUser(data.name.username)
+        setBaby(data.name.baby)
+        return data
+      }
+      //data => setUser(data)
+    ).then(final => {
+      console.log('final data', final)
+      const newitems = []
+      if(!added){
+      const table = document.querySelector('table');
+      const reversed = final.name.entries.reverse()
+        reversed.forEach(item => {
+          newitems.push(item)
+          
+          const row = document.createElement('tr');
+          
+          const dateString = item.date
+          const year = dateString.slice(0, 4);
+          const month = dateString.slice(5, 7);
+          const day = dateString.slice(8, 10);
+          
+          // Create a new Date object from the date string
+          const date = new Date(dateString);
+          
+          // Get the hour from the Date object
+          const hour = date.getHours();
+          
+          let hour12;
+          let ampm;
+          
+          // Determine whether the time is AM or PM
+          if (hour < 12) {
+            hour12 = hour;
+            ampm = 'AM';
+          } else {
+            if(hour === 12) hour12 = hour
+            else hour12 = hour - 12;
+            ampm = 'PM';
+          }
+          
+          const minute = dateString.slice(14, 16);
+          
+          const formattedDate = `${month}/${day}/${year} ${hour12}:${minute} ${ampm}`;
   
-  fetch('./api/userdata').then(
-    response => response.json()
-  ).then(
-    data => {
-      if(data.error == "undefined") router.push("/")
-      setUser(data.name.username)
-      setBaby(data.name.baby)
-      return data
-    }
-    //data => setUser(data)
-  ).then(final => {
-    console.log('final data', final)
-    if(!added){
-    const table = document.querySelector('table');
-
-      final.name.entries.forEach(item => {
-        const row = document.createElement('tr');
-        
-        const dateString = item.date
-        const year = dateString.slice(0, 4);
-        const month = dateString.slice(5, 7);
-        const day = dateString.slice(8, 10);
-        
-        // Create a new Date object from the date string
-        const date = new Date(dateString);
-        
-        // Get the hour from the Date object
-        const hour = date.getHours();
-
-        console.log('im getting hours of', hour)
-        
-        let hour12;
-        let ampm;
-        
-        // Determine whether the time is AM or PM
-        if (hour < 12) {
-          hour12 = hour;
-          ampm = 'AM';
-        } else {
-          if(hour === 12) hour12 = hour
-          else hour12 = hour - 12;
-          ampm = 'PM';
-        }
-        
-        const minute = dateString.slice(14, 16);
-        
-        const formattedDate = `${month}/${day}/${year} ${hour12}:${minute} ${ampm}`;
-
-
-        // const hour = date.slice(11, 13);
-        // const minute = date.slice(14, 16);    
-        // const formattedDate = `${month}/${day}/${year} ${hour}:${minute}`;
-
-        row.innerHTML = `
+  
+          // const hour = date.slice(11, 13);
+          // const minute = date.slice(14, 16);    
+          // const formattedDate = `${month}/${day}/${year} ${hour}:${minute}`;
+          row.innerHTML = `
           <td class="w-32">${item.value}</td>
           <td class="w-40">${formattedDate}</td>
           <td class="w-32">${item.note || ""}</td>
-        `;
-        table.appendChild(row);
-      });
-      setAdded(true)
-    }
-  })
-  .catch(
-    error => console.log(error)
-  )
+          <td> <img class="w-6 cursor-pointer trash" id='${count}' src="trash.png"></td>
+          `;
+          count++
+          table.appendChild(row);
+        });
+        console.log('new items', newitems)
+        setIdentifier([...newitems])
+        setAdded(true)
+      }
+     
+    }).then(async trashed => {
+      trashCans = document.querySelectorAll('img.trash')
+      trashCans.forEach(trash => {
+        trash.addEventListener('click', event => {
+          let arrayId = trash.id
+          let verifiedDate = { date: identifier[arrayId]}
+          console.log('hi im ', trash)
+          console.log(identifier)
+          console.log('the date should be', identifier[arrayId])
+
+          try {
+            fetch(`/api/createlog`, {
+              method: 'DELETE',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(verifiedDate)
+            }).then(response => response.json())
+            .then(data => location.reload())
+          } catch (error) {
+            
+          }
+
+        })
+      })
+    })
+    .catch(
+      error => console.log(error)
+    )
+    
+   
+
+  }, [identifier]);
+
+ 
   
   
 
   return (
-    <div className={popUp ?  'bg-black opacity-50': styles.container}>
+    <div className={styles.container}>
       <Head>
         <title>About Us</title>
        
@@ -122,16 +158,16 @@ export default function Home() {
 
         <div className='rounded shadow-md p-2 bg-white flex flex-row'>
         <div>
-          <img id='bottle' className='w-20 p-2 cursor-pointer' src='/bottle.png' alt='bottle'/>
+          <img id='bottle' className='w-20 p-2 cursor-pointer mainimg' src='/bottle.png' alt='bottle'/>
         </div>
         <div>
-          <img id='poop' className='w-20 p-2 cursor-pointer' src='/poop.png' alt='poop'/>
+          <img id='poop' className='w-20 p-2 cursor-pointer mainimg' src='/poop.png' alt='poop'/>
         </div>
         <div>
-          <img id='sleep' className='w-20 p-2 cursor-pointer' src='/sleep.png' alt='sleep'/>
+          <img id='sleep' className='w-20 p-2 cursor-pointer mainimg' src='/sleep.png' alt='sleep'/>
         </div>
         <div>
-          <img id='change'  className='w-20 p-2 cursor-pointer' src='/change.png' alt='change'/>
+          <img id='change'  className='w-20 p-2 cursor-pointer mainimg' src='/change.png' alt='change'/>
         </div>
         </div>
 
@@ -144,6 +180,7 @@ export default function Home() {
       <th>Event</th>
       <th>Last Time</th>
       <th>Note</th>
+      <th>Delete</th>
     </tr>
   </thead>
   <tbody>

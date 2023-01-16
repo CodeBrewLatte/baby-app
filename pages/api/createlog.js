@@ -17,6 +17,7 @@ export default async function handler(req, res) {
   const { method } = req;
   const payload = req.body.click;
   const note = req.body.note;
+  const newId = req.body.newId
 
   console.log("db connect", dbConnect());
   switch (method) {
@@ -37,16 +38,43 @@ export default async function handler(req, res) {
           const decoded = jwt.decode(token);
           const userId = decoded.sub;
           //update user
-          const entry = { date: new Date(), value: payload, note: note };
+          const entry = { date: new Date(), value: payload, note: note, newId: newId };
           await User.updateOne({ _id: userId }, { $push: { entries: entry } });
           return res.status(200).json({ success: true });
         } catch (error) {
           console.log(error);
         }
-
-        break;
       } catch (e) {
         console.log(e);
       }
+      break;
+    case "DELETE":
+      try {
+        console.log("hi");
+        console.log(req.body.date.newId);
+        const checkId = req.body.date.newId
+        const dateChecker = req.body.date;
+        const jwt = require("jsonwebtoken");
+        const token = req.cookies.token;
+        const decoded = jwt.decode(token);
+        const userId = decoded.sub;
+  
+
+        
+        
+        
+        await User.updateOne(
+          {}, 
+          {
+            $pull: {
+              entries: { newId: checkId}
+          }
+          }
+        );
+        return res.status(200).json({ success: true });
+      } catch (error) {
+        console.log(error);
+      }
+      break;
   }
 }

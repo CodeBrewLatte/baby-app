@@ -14,10 +14,11 @@ const TrackModal = (props) => {
     const [note, setNote] = useState('')
 
     const updateLog = (e) => {
-      e.preventDefault()
+      const newId = Math.floor(Math.random() * 100000);
       const payload = {
         click : props.buttonType.click,
-        note : note
+        note : note,
+        newId: newId
       }
 
       console.log('payload is', payload)
@@ -35,10 +36,10 @@ const TrackModal = (props) => {
     
 
     return(
-       // <div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-  <div className="fixed inset-0 z-10 overflow-y-auto">
-    <div className="flex min-h-full items-center justify-center p-4 text-center sm:items-center sm:p-0">
-  
+  <div className="relative z-10 bg-black">
+  <div className="  bg-metal backdrop overflow-x-hidden overflow-y-auto fixed inset-0 z-0 outline-none focus:outline-none justify-center items-center flex opacity-50"></div>
+    
+    <div className="absolute top-48 -left-36 opacity-100 z-100 flex min-h-full items-center justify-center mt-5 text-center sm:items-center sm:p-0">
       <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
         <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
           <div className="sm:flex sm:items-start">
@@ -68,7 +69,9 @@ const TrackModal = (props) => {
          </Box>
         </div>
       </div>
-    </div>
+    
+    
+  </div>
   </div>
     )
 }
