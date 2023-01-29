@@ -91,28 +91,47 @@ export default function Home() {
        
       </main>
 
-     <section className=' w-full flex h-auto sm:h-96 items-center justify-between bg-purple flex-col sm:flex-row'>
+      <section class="w-full flex items-center justify-center bg-purple-500 sm:h-72 h-auto sm:flex-row flex-col py-6">
+  <span class="w-56 bg-white rounded-lg p-6 text-center items-center h-64 flex flex-col sm:mx-4 sm:my-5 py-2 my-3">
+    <img id="bottle" class="w-20 p-2" src="/report.png" alt="graph"/>
+    <h3 class="font-bold text-xl">Track Baby Activities</h3>
+    <p class="text-base">Our app allows you to track common activities like poop, feeding, and more</p>
+  </span>
 
-      <span className='flex flex-col w-56 bg-white rounded-md p-2 mx-4 my-5 text-center items-center'>
-      <img id='bottle' className='w-20 p-2' src='/report.png' alt='graph'/>
-        <h3 className=' flex font-bold'>Track Baby Activities</h3>
-        <p> Our application allows you to track common activites like poop, feeding and more </p>
-      </span>
+  <span class="w-56 bg-white rounded-lg p-6 text-center items-center h-64 flex flex-col sm:mx-4 sm:my-5 py-2 my-3">
+    <img id="bottle" class="w-20 p-2" src="/pencil.png" alt="pencil"/>
+    <h3 class="font-bold text-xl">Add notes to events</h3>
+    <p class="text-base">You can keep notes on activities, for example if your baby had a runny poop</p>
+  </span>
 
-      <span className='flex flex-col w-56 bg-white rounded-md p-2 mx-4 my-5 text-center items-center'>
-      <img id='bottle' className='w-20 p-2' src='/pencil.png' alt='pencil'/>
-      <h3 className=' font-bold'>Add notes to events</h3>
-      <p className=' font-light'>In addition to tracking, you can keep notes on certain activites, so if your baby had a runny poop you can document that for example</p>
-      </span>
+  <span class="w-56 bg-white rounded-lg p-6 text-center items-center h-64 flex flex-col sm:mx-4 sm:my-5 py-2 my-3">
+    <img id="bottle" class="w-20 p-2" src="/bottle.png" alt="bottle"/>
+    <h3 class="font-bold text-xl">Search for activities</h3>
+    <p class="text-base">Use a search function to find specific events</p>
+  </span>
+</section>
 
-      <span className='flex flex-col w-56 bg-white rounded-md p-2 mx-4 my-5 text-center items-center'>
-      <img id='bottle' className='w-20 p-2' src='/bottle.png' alt='bottle'/>
-      <h3 className=' font-bold'>Search for activites </h3>
-      <p> In the event that you need to search for a certain event you can use a search functionality to check on certain types of events</p>
-      </span>
+<div className="flex p-6 h-auto rounded-md bg-tahiti ">
+  <img src="cute.jpg" alt="example" className="w-64 sm:w-96 h-96 m-6 sm:m-0"/>
+  <div className="text-left sm:text-center ml-6">
+    <section className=' bg-white shadow-lg z-10 rounded p-5'>
+    <h3 className="text-2xl font-bold">Tracking made easy</h3>
+    <p className="text-lg mt-2 text-left">
+    Welcome to our baby tracking web app! This app is designed to make life easier for new parents by allowing you to keep track of all your baby's important activities such as when they poop, eat, sleep, and more. With just a few clicks, you can easily track and monitor your baby's growth and development. Whether you're on the go or at home, you can access our app from any device.
+</p>
+<br></br>
+<p className="text-lg mt-2 text-left">
+Our user-friendly interface makes it easy to add new events and view past ones, so you'll never forget a single detail about your baby's day. Plus, with the option to add notes to each event, you can keep a running log of important information that you may need later.
+</p>
+<br></br>
+<p className="text-lg mt-2 text-left">
+Don't wait, sign up today to start taking advantage of our baby tracking app and simplify your life as a new parent. Start tracking your baby's progress and enjoy peace of mind knowing you have all their important information in one place!
+    </p>
+    </section>
+  </div>
+</div>
 
 
-     </section>
        
          <h4 className='text-white text-center py-5'>An App by Steve Benner</h4>
 

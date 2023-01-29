@@ -142,16 +142,30 @@ export default function Home() {
   
 
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>About Us</title>
        
         <meta name="description" content="Baby Living Tracking App" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+       
 
       <main className={styles.main}>
-       
+      
+        <section className=' flex flex-col fixed left-0 h-full bg-metal text-white p-5 w-32'>
+          <h4 className='font-bold'>Baby App</h4>
+            <p>Home</p>
+            <p>History</p>
+            <p>Contact</p>
+            <p>Log Out</p>
+
+        </section>
+
+
+      <section className=' bg-white shadow-lg w-1/2 h-1/2'>
+
+     
           {user ? <p>Hello there {user}</p> : <p>Loading...</p>}
           {popUp ? <TrackModal removeModal={dropPopup} buttonType={passedValue.current}/> : <div></div> }
       
@@ -188,26 +202,18 @@ export default function Home() {
   </tbody>
 </table>
         </div>
-
-        
-
-
-      
-
-
-
-       
+        </section>
       </main>
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-         An App by Steve
-        </a>
-      </footer>
+      <footer class="fixed bottom-0 w-full bg-purple text-white p-4">
+  <div class="container mx-auto">
+    <a class="text-white hover:text-gray-500" href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app" target="_blank" rel="noopener noreferrer">
+      An App by Steve
+    </a>
+  </div>
+  
+</footer>
+
     </div>
   )
 }

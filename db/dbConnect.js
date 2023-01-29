@@ -25,9 +25,15 @@ if (!cached) {
 }
 
 async function dbConnect() {
-  mongoose.connect(MONGODB_URI).then((mongoose) => {
-    return mongoose;
-  });
+  mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then((mongoose) => {
+      console.log('Successfully connected to MongoDB!');
+      return mongoose;
+    })
+    .catch(error => {
+      console.error('Error connecting to MongoDB:', error);
+    });
 }
 
 export default dbConnect;
+
