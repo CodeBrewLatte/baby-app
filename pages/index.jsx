@@ -111,7 +111,7 @@ export default function Home() {
   </span>
 </section>
 
-<div className="flex p-6 h-auto rounded-md bg-tahiti ">
+<div className="flex p-6 h-auto rounded-md bg-tahiti flex-col sm:flex-row ">
   <img src="cute.jpg" alt="example" className="w-64 sm:w-96 h-96 m-6 sm:m-0"/>
   <div className="text-left sm:text-center ml-6">
     <section className=' bg-white shadow-lg z-10 rounded p-5'>
