@@ -117,15 +117,15 @@ export default function Home() {
     <section className=' bg-white shadow-lg z-10 rounded p-5'>
     <h3 className="text-2xl font-bold">Tracking made easy</h3>
     <p className="text-lg mt-2 text-left">
-    Welcome to our baby tracking web app! This app is designed to make life easier for new parents by allowing you to keep track of all your baby's important activities such as when they poop, eat, sleep, and more. With just a few clicks, you can easily track and monitor your baby's growth and development. Whether you're on the go or at home, you can access our app from any device.
+    Welcome to our baby tracking web app! This app is designed to make life easier for new parents by allowing you to keep track of all your babys important activities such as when they poop, eat, sleep, and more. With just a few clicks, you can easily track and monitor your babys growth and development. Whether you are on the go or at home, you can access our app from any device.
 </p>
 <br></br>
 <p className="text-lg mt-2 text-left">
-Our user-friendly interface makes it easy to add new events and view past ones, so you'll never forget a single detail about your baby's day. Plus, with the option to add notes to each event, you can keep a running log of important information that you may need later.
+Our user-friendly interface makes it easy to add new events and view past ones, so you will never forget a single detail about your babys day. Plus, with the option to add notes to each event, you can keep a running log of important information that you may need later.
 </p>
 <br></br>
 <p className="text-lg mt-2 text-left">
-Don't wait, sign up today to start taking advantage of our baby tracking app and simplify your life as a new parent. Start tracking your baby's progress and enjoy peace of mind knowing you have all their important information in one place!
+Don't wait, sign up today to start taking advantage of our baby tracking app and simplify your life as a new parent. Start tracking your babys progress and enjoy peace of mind knowing you have all their important information in one place!
     </p>
     </section>
   </div>
