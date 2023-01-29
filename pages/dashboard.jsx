@@ -93,7 +93,7 @@ export default function Home() {
           <td class="w-32">${item.value}</td>
           <td class="w-40">${formattedDate}</td>
           <td class="w-32">${item.note || ""}</td>
-          <td> <img class="w-6 cursor-pointer trash" id='${count}' src="trash.png"></td>
+          <td class="flex items-center text-center justify-center"> <img class="w-6 justify-center cursor-pointer trash" id='${count}' src="trash.png"></td>
           `;
           count++
           table.appendChild(row);
@@ -152,6 +152,9 @@ export default function Home() {
        
 
       <main className={styles.main}>
+
+      {user ? <p>Hello there {user}</p> : <p>Loading...</p>}
+          {popUp ? <TrackModal removeModal={dropPopup} buttonType={passedValue.current}/> : <div></div> }
       
         <section className=' flex flex-col fixed left-0 h-full bg-metal text-white p-5 w-32'>
           <h4 className='font-bold'>Baby App</h4>
@@ -166,11 +169,10 @@ export default function Home() {
       <section className=' bg-white shadow-lg w-1/2 h-1/2'>
 
      
-          {user ? <p>Hello there {user}</p> : <p>Loading...</p>}
-          {popUp ? <TrackModal removeModal={dropPopup} buttonType={passedValue.current}/> : <div></div> }
+          
       
 
-        <div className='rounded shadow-md p-2 bg-white flex flex-row'>
+        <div className='rounded p-2 bg-white flex flex-row justify-center'>
         <div>
           <img id='bottle' className='w-20 p-2 cursor-pointer mainimg' src='/bottle.png' alt='bottle'/>
         </div>
@@ -206,7 +208,7 @@ export default function Home() {
       </main>
 
       <footer class="fixed bottom-0 w-full bg-purple text-white p-4">
-  <div class="container mx-auto">
+  <div class="container mx-auto text-center">
     <a class="text-white hover:text-gray-500" href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app" target="_blank" rel="noopener noreferrer">
       An App by Steve
     </a>
