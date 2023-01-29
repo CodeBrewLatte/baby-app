@@ -125,7 +125,7 @@ Our user-friendly interface makes it easy to add new events and view past ones, 
 </p>
 <br></br>
 <p className="text-lg mt-2 text-left">
-Don't wait, sign up today to start taking advantage of our baby tracking app and simplify your life as a new parent. Start tracking your babys progress and enjoy peace of mind knowing you have all their important information in one place!
+Do not wait, sign up today to start taking advantage of our baby tracking app and simplify your life as a new parent. Start tracking your babys progress and enjoy peace of mind knowing you have all their important information in one place!
     </p>
     </section>
   </div>
